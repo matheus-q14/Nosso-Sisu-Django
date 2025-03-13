@@ -17,7 +17,7 @@ def login_page(request):
         if form.is_valid():
             user = form.clean()
             user_db = MyUser.objects.get(cpf=user.get("username"))
-            login(request, user)
+            login(request, user_db)
             return redirect("home_page", user_id=user_db.pk)
         response = "CPF ou senha incorreto, tente novamente"
         form_login = FormLogin()
@@ -32,19 +32,11 @@ def redefinir_senha(request):
         return render(request, "login/change_password.html", {"form": form})
     elif request.method == "POST":
         form = FormChangePassword(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             user = MyUser.objects.get(cpf=form["cpf"].value())
-            print(user)
-            form.clean(user)
+            form.clean()
             form.save(user)
             return redirect("login_page")
-        # return redirect("signup_page")
-        # if form.is_valid() and :
-        #     nova_senha = form["senha"].value()
-        #     user = MyUser.objects.get(cpf=form["cpf"].value())
-        #     user.senha = make_password(nova_senha)
-        #     user.save()
-        #     return redirect("login_page")
 
 
 def cadastrar_usuario(request):
