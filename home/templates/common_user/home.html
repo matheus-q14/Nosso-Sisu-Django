@@ -1,0 +1,29 @@
+{% extends '../base_home.html' %}
+{% block content %}
+    <div class="cards-container h-auto gap-6 justify-self-center self-center flex flex-wrap flex-row">
+        <!-- primeiro cartao de faculdade -->
+        <div class="max-w-sm p-6 border rounded-lg shadow-sm bg-gray-800 border-gray-700">
+            <a href="#">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{faculdade}}</h5>
+            </a>
+        <p class="mb-3 font-normal text-gray-400">{{curso}}</p>
+        <p class="mb-3 font-normal text-gray-400">{{vagas}}</p>
+        <p class="mb-3 font-normal text-gray-400">{{nota_posicao}}</p>
+            <a href="#"
+               base_home.html
+               class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Aqui será o dropdown para escolher o curso/facul</a>
+        </div>
+        <!-- segundo cartao de faculdade -->
+        <div class="max-w-sm p-6 border rounded-lg shadow-sm bg-gray-800 border-gray-700">
+            <a href="#">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{faculdade2}}</h5>
+            </a>
+        <p class="mb-3 font-normal text-gray-400">{{curso2}}</p>
+        <p class="mb-3 font-normal text-gray-400">{{vagas2}}</p>
+        <p class="mb-3 font-normal text-gray-400">{{nota_posicao2}}</p>
+            <a href="#"
+               base_home.html
+               class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Aqui será o dropdown para escolher o curso/facul</a>
+        </div>
+    </div>
+{% endblock %}

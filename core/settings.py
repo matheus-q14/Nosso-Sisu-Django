@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "login",
+    "home",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -108,6 +110,12 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
     "django.contrib.auth.hashers.ScryptPasswordHasher",
 ]
+
+# Login Url
+LOGIN_URL = "/account/login/"
+
+# Default User
+AUTH_USER_MODEL = "users.MyUser"
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/

@@ -1,10 +1,11 @@
-from django.contrib.auth.hashers import check_password, make_password
+from django.contrib.auth import login
+from django.contrib.auth.hashers import make_password
 from django.shortcuts import redirect, render
 
-from .forms import FormChangePassword, FormLogin, FormSignup
-from .models import Usuario
+from users.forms import FormChangePassword, FormLogin, FormSignup
+from users.models import MyUser
 
-# Create your views here.
+# from .forms import FormChangePassword
 
 
 def login_page(request):
@@ -14,19 +15,15 @@ def login_page(request):
     elif request.method == "POST":
         form = FormLogin(request.POST)
         if form.is_valid():
-            cpf = form["CPF"].value()
-            senha_input = form["senha"].value()
-            senha_db = Usuario.objects.get(cpf=cpf).senha
-            if check_password(senha_input, senha_db):
-                print("Correto")
-                return render(request, "home")
-            else:
-                response = "Senha ou CPF incorreto, tente novamente"
-                return render(
-                    request,
-                    "login/login_page.html",
-                    {"response": response, "form": form},
-                )
+            user = form.clean()
+            user_db = MyUser.objects.get(cpf=user.get("username"))
+            login(request, user)
+            return redirect("home_page", user_id=user_db.pk)
+        response = "CPF ou senha incorreto, tente novamente"
+        form_login = FormLogin()
+        return render(
+            request, "login/login_page.html", {"response": response, "form": form_login}
+        )
 
 
 def redefinir_senha(request):
@@ -35,12 +32,19 @@ def redefinir_senha(request):
         return render(request, "login/change_password.html", {"form": form})
     elif request.method == "POST":
         form = FormChangePassword(request.POST)
-        if form.is_valid() and Usuario.objects.get(cpf=form['cpf'].value()):
-            nova_senha = form['senha'].value()
-            user = Usuario.objects.get(cpf=form['cpf'].value())
-            user.senha = make_password(nova_senha)
-            user.save()
-            return redirect('login_page')
+        if form.is_valid:
+            user = MyUser.objects.get(cpf=form["cpf"].value())
+            print(user)
+            form.clean(user)
+            form.save(user)
+            return redirect("login_page")
+        # return redirect("signup_page")
+        # if form.is_valid() and :
+        #     nova_senha = form["senha"].value()
+        #     user = MyUser.objects.get(cpf=form["cpf"].value())
+        #     user.senha = make_password(nova_senha)
+        #     user.save()
+        #     return redirect("login_page")
 
 
 def cadastrar_usuario(request):
@@ -50,7 +54,9 @@ def cadastrar_usuario(request):
     elif request.method == "POST":
         form = FormSignup(request.POST)
         if form.is_valid():
-            formulario = form.save(commit=False)
-            formulario.senha = make_password(formulario.senha)
-            formulario = form.save()
+            form.save()
             return redirect("login_page")
+
+
+def login_redirect(request):
+    return redirect("login_page")

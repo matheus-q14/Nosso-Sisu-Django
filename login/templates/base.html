@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-Br">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
-    <title>Nosso Sisu</title>
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-  </head>
-  <body class="max-h-full ">
-      <Div class = "content max-h-full bg-gray-900 flex justify-center align-center p-5">
-        {% block content %}
-        {% endblock %}
-       </div>
-  </body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, height=device-height, initial-scale=1">
+        <title>Nosso Sisu</title>
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+              rel="stylesheet">
+    </head>
+    <body class="max-h-full ">
+        <div class="content max-h-full bg-gray-900 flex justify-center align-center p-5">
+            {% block content %}{% endblock %}
+        </div>
+    </body>
 </html>

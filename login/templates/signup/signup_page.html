@@ -1,17 +1,24 @@
 {% extends '../base.html' %}
 {% block content %}
-  <div class = "my-5 mx-10 max-w-lg w-full justify-center align-center">
-    <h1 class = "block text-gray-100 text-5xl font-medium mb-5 text-center">Nosso Sisu</h1>
-    <form method="POST" action ="{% url 'cadastrar_usuario' %}" class="max-w-lg mx-15 my-5 p-5 border-1 rounded-md border-gray-500 border-opacity-30"> {% csrf_token %}
-      {% for field in form %}
-        <label for="{{ field.auto_id }}" class="block mb-4 text-base font-medium text-white">{{ field.label }}</label>
-        {{ field }}
-        <br>
-      {% endfor %}
-     <br>
-      <button type="submit" class="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mb-3">Realizar cadastro</button>
-      <span id="resultado"></span>
-    </form>
-  </div>
-
+    <div class = "my-5 mx-10 max-w-lg w-full justify-center align-center">
+        <h1 class = "block text-gray-100 text-5xl font-medium mb-5 text-center">Nosso Sisu</h1>
+        <form method="POST"
+              action="{% url 'cadastrar_usuario' %}"
+              class="max-w-lg mx-15 my-5 p-5 border-1 rounded-md border-gray-500 border-opacity-30">
+            {% csrf_token %}
+            {% for field in form %}
+                <label for="{{ field.auto_id }}"
+                       class="block mb-4 text-base font-medium text-white">{{ field.label }}</label>
+                {{ field }}
+                <span class="block font-normal text-white">{{ field.help_text }}</span>
+                <span class="block font-normal text-white">{{ field.erros_messages }}</span>
+                <br>
+            {% endfor %}
+            <br>
+            <button type="submit"
+                    class="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mb-3">
+                Realizar cadastro
+            </button>
+        </form>
+    </div>
 {% endblock %}
