@@ -11,8 +11,8 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     nota: models.DecimalField = models.DecimalField(max_digits=5, decimal_places=2)
     cpf: models.CharField = models.CharField(max_length=11, unique=True)
     admin: models.BooleanField = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+    is_active: models.BooleanField = models.BooleanField(default=True)
+    is_staff: models.BooleanField = models.BooleanField(default=False)
     date_joined: models.DateTimeField = models.DateTimeField(default=timezone.now)
 
     USERNAME_FIELD = "cpf"
