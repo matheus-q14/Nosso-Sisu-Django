@@ -15,7 +15,9 @@ class Cursos(models.Model):
 
 
 class CursoUsuario(models.Model):
-    user: models.ForeignKey = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    user: models.ForeignKey = models.ForeignKey(
+        MyUser, on_delete=models.CASCADE, blank=True
+    )
     curso: models.ForeignKey = models.ForeignKey(Cursos, on_delete=models.CASCADE)
 
     def get_faculdade(self):

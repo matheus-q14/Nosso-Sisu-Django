@@ -9,10 +9,11 @@
             <p class="mb-3 font-normal text-gray-400">{{ curso1.curso }}</p>
             <p class="mb-3 font-normal text-gray-400">{{ curso1.vagas }}</p>
             <p class="mb-3 font-normal text-gray-400">{{ curso1.nota_posicao }}</p>
-            <form method="POST" action="{% url 'process_choice' %}">
+            <form method="POST" action="{% url 'process' user_id %}">
+                {% csrf_token %}
                 <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">{{ form }}</span>
                 <button type='submit'
-                        class='text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mb-3'>
+                        class='text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto mt-5 px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mb-3'>
                     Confimar escolha
                 </button>
             </form>
@@ -26,10 +27,11 @@
             <p class="mb-3 font-normal text-gray-400">{{ curso2.vagas }}</p>
             <p class="mb-3 font-normal text-gray-400">{{ curso2.nota_posicao }}</p>
             {% csrf_token %}
-            <form method="POST" action="{% url 'process_choice' %}">
+            <form method="POST" action="{% url 'process' user_id %}">
+                {% csrf_token %}
                 <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-wrap text-center text-white rounded-lg focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">{{ form }}</span>
                 <button type='submit'
-                        class='text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mb-3'>
+                        class='text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto mt-5 px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mb-3'>
                     Confimar escolha
                 </button>
             </form>

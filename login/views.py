@@ -1,6 +1,4 @@
-from django.contrib.auth import login
-
-# from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
 
 from users.forms import FormChangePassword, FormLogin, FormSignup
@@ -16,10 +14,12 @@ def login_page(request):
     elif request.method == "POST":
         form = FormLogin(request.POST)
         if form.is_valid():
-            user = form.clean()
-            user_db = MyUser.objects.get(cpf=user.get("username"))
-            login(request, user_db)
-            return redirect("home_page", user_id=user_db.pk)
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("home_page", user_id=user.pk)
         response = "CPF ou senha incorreto, tente novamente"
         form_login = FormLogin()
         return render(

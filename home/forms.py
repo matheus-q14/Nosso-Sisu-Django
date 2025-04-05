@@ -16,3 +16,4 @@ class ChooseCourseForm(forms.ModelForm):
     class Meta:
         model = CursoUsuario
         fields = ["user", "curso"]
+        labels = {"user": ""}

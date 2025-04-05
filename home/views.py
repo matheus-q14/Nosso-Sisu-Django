@@ -1,6 +1,5 @@
-from django.shortcuts import render
-
-from users.models import MyUser
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, render
 
 from .forms import ChooseCourseForm
 from .models import Cursos, CursoUsuario
@@ -9,18 +8,18 @@ from .models import Cursos, CursoUsuario
 
 
 def home_page(request, user_id):
-    user = MyUser.objects.get(pk=user_id)
-    if not user.admin:
-        return home_common_user(request, user)
+    if not request.user.admin:
+        return home_common_user(request)
     else:
-        return home_admin_user(request, user)
+        return home_admin_user(request)
 
 
-def home_common_user(request, user):
+def home_common_user(request):
+    user = request.user
     form = ChooseCourseForm()
     cursos = CursoUsuario.objects.filter(user=user)
     context = {}
-    if cursos[0]:
+    if len(cursos) == 1:
         curso1 = cursos[0]
         posicao1 = calcular_posicao(
             Cursos.objects.get(curso=curso1.get_curso()), user.nota
@@ -36,7 +35,7 @@ def home_common_user(request, user):
             "curso2": {},
             "form": form,
         }
-    elif cursos[0] and cursos[1]:
+    elif len(cursos) == 2:
         curso1 = cursos[0]
         curso2 = cursos[1]
         posicao1 = calcular_posicao(
@@ -90,11 +89,15 @@ def processCourseChoice(request, user_id):
         form = ChooseCourseForm(request.POST)
         if form.is_valid():
             user = request.user
-            print(user)
-            form.save(commit=False)
-            form.user = user
-            print(form)
-            form.save(commit=True)
+            if user.is_authenticated:
+                course = form.save(commit=False)
+                course.user = user
+                print(course)
+                course.save()
+
+                return redirect("home_page", user_id=user_id)
+
+    return HttpResponseRedirect("home_page")
 
 
 def calcular_posicao(curso, nota):
