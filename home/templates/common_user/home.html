@@ -1,29 +1,38 @@
 {% extends '../base_home.html' %}
 {% block content %}
-    <div class="cards-container h-auto gap-6 justify-self-center self-center flex flex-wrap flex-row">
+    <div class="cards-container h-auto gap-6 justify-self-center self-center flex flex-wrap lg:flex-row flex-col">
         <!-- primeiro cartao de faculdade -->
-        <div class="max-w-sm p-6 border rounded-lg shadow-sm bg-gray-800 border-gray-700">
+        <div class="max-w-md p-6 border rounded-lg shadow-sm bg-gray-800 border-gray-700">
             <a href="#">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{faculdade}}</h5>
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{ curso1.faculdade }}</h5>
             </a>
-        <p class="mb-3 font-normal text-gray-400">{{curso}}</p>
-        <p class="mb-3 font-normal text-gray-400">{{vagas}}</p>
-        <p class="mb-3 font-normal text-gray-400">{{nota_posicao}}</p>
-            <a href="#"
-               base_home.html
-               class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Aqui será o dropdown para escolher o curso/facul</a>
+            <p class="mb-3 font-normal text-gray-400">{{ curso1.curso }}</p>
+            <p class="mb-3 font-normal text-gray-400">{{ curso1.vagas }}</p>
+            <p class="mb-3 font-normal text-gray-400">{{ curso1.nota_posicao }}</p>
+            <form method="POST" action="{% url 'process_choice' %}">
+                <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">{{ form }}</span>
+                <button type='submit'
+                        class='text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mb-3'>
+                    Confimar escolha
+                </button>
+            </form>
         </div>
         <!-- segundo cartao de faculdade -->
-        <div class="max-w-sm p-6 border rounded-lg shadow-sm bg-gray-800 border-gray-700">
+        <div class="max-w-md p-6 border rounded-lg shadow-sm bg-gray-800 border-gray-700">
             <a href="#">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{faculdade2}}</h5>
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{ curso2.faculdade }}</h5>
             </a>
-        <p class="mb-3 font-normal text-gray-400">{{curso2}}</p>
-        <p class="mb-3 font-normal text-gray-400">{{vagas2}}</p>
-        <p class="mb-3 font-normal text-gray-400">{{nota_posicao2}}</p>
-            <a href="#"
-               base_home.html
-               class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Aqui será o dropdown para escolher o curso/facul</a>
+            <p class="mb-3 font-normal text-gray-400">{{ curso2.curso }}</p>
+            <p class="mb-3 font-normal text-gray-400">{{ curso2.vagas }}</p>
+            <p class="mb-3 font-normal text-gray-400">{{ curso2.nota_posicao }}</p>
+            {% csrf_token %}
+            <form method="POST" action="{% url 'process_choice' %}">
+                <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-wrap text-center text-white rounded-lg focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">{{ form }}</span>
+                <button type='submit'
+                        class='text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mb-3'>
+                    Confimar escolha
+                </button>
+            </form>
         </div>
     </div>
 {% endblock %}

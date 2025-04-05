@@ -1,5 +1,6 @@
 from django.contrib.auth import login
-from django.contrib.auth.hashers import make_password
+
+# from django.contrib.auth.hashers import make_password
 from django.shortcuts import redirect, render
 
 from users.forms import FormChangePassword, FormLogin, FormSignup

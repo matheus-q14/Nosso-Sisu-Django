@@ -11,7 +11,7 @@ class Cursos(models.Model):
     numero_vagas: models.IntegerField = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.curso} - {self.faculdade}"
+        return f"{self.curso} - {self.faculdade.split('-')[1]}"
 
 
 class CursoUsuario(models.Model):
