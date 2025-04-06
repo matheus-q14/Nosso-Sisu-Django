@@ -9,4 +9,5 @@ urlpatterns = [
         views.processCourseChoice,
         name="process",
     ),
+    path("user/logout", views.logout_user, name="logout"),
 ]

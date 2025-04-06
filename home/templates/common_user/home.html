@@ -1,6 +1,7 @@
 {% extends '../base_home.html' %}
 {% block content %}
-    <div class="cards-container h-auto gap-6 justify-self-center self-center flex flex-wrap lg:flex-row flex-col">
+    <h2 class="block text-gray-100 text-3xl font-medium mt-20 mb-8 text-center">Escolha o seu curso</h2>
+    <div class="cards-container h-auto mb-10 gap-6 justify-self-center self-center flex lg:flex-row flex-col">
         <!-- primeiro cartao de faculdade -->
         <div class="max-w-md p-6 border rounded-lg shadow-sm bg-gray-800 border-gray-700">
             <a href="#">
@@ -12,7 +13,7 @@
             <form method="POST" action="{% url 'process' user_id %}">
                 {% csrf_token %}
                 <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">{{ form }}</span>
-                <button type='submit'
+                <button type="submit"
                         name="curso_alterado"
                         value="1"
                         class='text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto mt-5 px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mb-3'>

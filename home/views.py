@@ -1,3 +1,4 @@
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -80,3 +81,8 @@ def calcular_posicao(curso, nota):
 
 def home_admin_user(request, user):
     pass
+
+
+def logout_user(request):
+    logout(request)
+    return redirect("login_page")
