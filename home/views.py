@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 
@@ -18,65 +19,26 @@ def home_common_user(request):
     user = request.user
     form = ChooseCourseForm()
     cursos = CursoUsuario.objects.filter(user=user)
-    context = {}
-    if len(cursos) == 1:
-        curso1 = cursos[0]
-        posicao1 = calcular_posicao(
-            Cursos.objects.get(curso=curso1.get_curso()), user.nota
-        )
-        context = {
-            "user_id": user.pk,
-            "curso1": {
-                "faculdade": curso1.get_faculdade(),
-                "curso": curso1.get_curso(),
-                "vagas": curso1.get_numero_vagas(),
-                "nota_posicao": posicao1,
-            },
-            "curso2": {},
-            "form": form,
-        }
-    elif len(cursos) == 2:
-        curso1 = cursos[0]
-        curso2 = cursos[1]
-        posicao1 = calcular_posicao(
-            Cursos.objects.get(curso=curso1.get_curso()), user.nota
-        )
-        posicao2 = calcular_posicao(
-            Cursos.objects.get(curso=curso2.get_curso()), user.nota
-        )
-        context = {
-            "user_id": user.pk,
-            "curso1": {
-                "faculdade": curso1.get_faculdade(),
-                "curso": curso1.get_curso(),
-                "vagas": curso1.get_numero_vagas(),
-                "nota_posicao": posicao1,
-            },
-            "curso2": {
-                "faculdade": curso2.get_faculdade(),
-                "curso": curso2.get_curso(),
-                "vagas": curso2.get_numero_vagas(),
-                "nota_posicao": posicao2,
-            },
-            "form": form,
-        }
-    else:
-        context = {
-            "user_id": user.pk,
-            "curso1": {
-                "faculdade": "",
-                "curso": "",
-                "vagas": "",
-                "nota_posicao": "",
-            },
-            "curso2": {
-                "faculdade": "",
-                "curso": "",
-                "vagas": "",
-                "nota_posicao": "",
-            },
-            "form": form,
-        }
+    context = {
+        "user_id": user.pk,
+        "form": form,
+    }
+    if cursos:
+        for i in range(0, len(cursos)):
+            curso = cursos[i]
+            posicao = calcular_posicao(
+                Cursos.objects.get(curso=curso.get_curso()), user.nota
+            )
+            curso_atual = {
+                f"curso{i+1}": {
+                    "faculdade": curso.get_faculdade(),
+                    "curso": curso.get_curso(),
+                    "vagas": f"{curso.get_numero_vagas()} vagas",
+                    "nota_posicao": posicao,
+                },
+            }
+            context.update(curso_atual)
+
     return render(
         request,
         "common_user/home.html",
@@ -84,19 +46,27 @@ def home_common_user(request):
     )
 
 
+@login_required
 def processCourseChoice(request, user_id):
     if request.method == "POST":
         form = ChooseCourseForm(request.POST)
         if form.is_valid():
             user = request.user
-            if user.is_authenticated:
-                course = form.save(commit=False)
-                course.user = user
-                print(course)
-                course.save()
-
-                return redirect("home_page", user_id=user_id)
-
+            cursos = CursoUsuario.objects.filter(user=user)
+            curso = form.save(commit=False)
+            curso.user = user
+            if len(cursos) >= 2:
+                curso_selecionado = int(request.POST["curso_alterado"])
+                match curso_selecionado:
+                    case 1:
+                        cursos[0].curso = curso.curso
+                        cursos[0].save()
+                    case 2:
+                        cursos[1].curso = curso.curso
+                        cursos[1].save()
+            else:
+                curso.save()
+            return redirect("home_page", user_id=user_id)
     return HttpResponseRedirect("home_page")
 
 
