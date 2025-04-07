@@ -1,9 +1,9 @@
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
-from .forms import ChooseCourseForm
+from .forms import ChooseCourseForm, CreateCourseForm
 from .models import Cursos, CursoUsuario
 
 # Create your views here.
@@ -28,7 +28,10 @@ def home_common_user(request):
         for i in range(0, len(cursos)):
             curso = cursos[i]
             posicao = calcular_posicao(
-                Cursos.objects.get(curso=curso.get_curso()), user.nota
+                Cursos.objects.get(
+                    curso=curso.get_curso(), faculdade=curso.get_faculdade()
+                ),
+                user.nota,
             )
             curso_atual = {
                 f"curso{i+1}": {
@@ -48,7 +51,7 @@ def home_common_user(request):
 
 
 @login_required
-def processCourseChoice(request, user_id):
+def process_course_choice(request, user_id):
     if request.method == "POST":
         form = ChooseCourseForm(request.POST)
         if form.is_valid():
@@ -68,7 +71,10 @@ def processCourseChoice(request, user_id):
             else:
                 curso.save()
             return redirect("home_page", user_id=user_id)
-    return HttpResponseRedirect("home_page")
+    else:
+        response = HttpResponse()
+        response.status_code = 405
+        return response
 
 
 def calcular_posicao(curso, nota):
@@ -79,8 +85,21 @@ def calcular_posicao(curso, nota):
     return f"Nota: {nota}. Posição {notas_ordenadas.index(float(nota)) + 1} de {curso.get_numero_vagas()} vagas"
 
 
-def home_admin_user(request, user):
-    pass
+def home_admin_user(request):
+    if request.method == "GET":
+        form = CreateCourseForm()
+        context = {"user_id": request.user.pk, "form": form}
+        return render(request, "admin_user/home_admin.html", context)
+
+
+def create_course(request):
+    if request.method == "POST":
+        form = CreateCourseForm(request.POST)
+        if form.is_valid():
+            form.clean()
+            form.save()
+            context = {"user_id": request.user.pk}
+            return render(request, "admin_user/succes_page.html", context)
 
 
 def logout_user(request):

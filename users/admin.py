@@ -8,10 +8,10 @@ from .models import MyUser
 class MyUserAdmin(UserAdmin):
     add_form = FormSignup
     model = MyUser
-    list_display = ("email", "is_staff", "is_active", "cpf", "nome", "nota")
-    list_filter = ("email", "is_staff", "is_active", "cpf", "nome", "nota")
+    list_display = ("email", "is_staff", "is_active", "admin", "cpf", "nome", "nota")
+    list_filter = ("email", "is_staff", "is_active", "admin", "cpf", "nome", "nota")
     fieldsets = (
-        (None, {"fields": ("email", "password", "nome", "cpf")}),
+        (None, {"fields": ("email", "admin", "password", "nome", "cpf")}),
         (
             "Permissions",
             {"fields": ("is_staff", "is_active", "groups", "user_permissions")},
@@ -26,9 +26,11 @@ class MyUserAdmin(UserAdmin):
                     "email",
                     "cpf",
                     "nome",
+                    "nota",
                     "password1",
                     "password2",
                     "is_staff",
+                    "admin",
                     "is_active",
                     "groups",
                     "user_permissions",

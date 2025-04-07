@@ -1,0 +1,7 @@
+{% extends '../base_home.html' %}
+{% block content %}
+<div class="h-screen my-5 mx-10 max-w-lg w-full self-center justify-self-center justify-center align-center">
+  <h1 class="block text-green-300 text-3xl font-medium mb-5 text-center">Curso adicionado com sucesso</h1>
+  <a href="{% url 'home_page' user_id %}" class="text-gray-100 font-normal underline">Adicionar um novo curso</a>
+</div>
+{% endblock %}
