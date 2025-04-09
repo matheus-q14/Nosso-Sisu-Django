@@ -1,9 +1,10 @@
 {% extends '../base_home.html' %}
 {% block content %}
-    <h2 class="block text-gray-100 text-3xl font-medium mt-20 mb-8 text-center">Escolha o seu curso</h2>
-    <div class="cards-container h-auto mb-10 gap-6 justify-self-center self-center flex lg:flex-row flex-col">
+    <h2 class="block text-gray-100 text-3xl font-medium mt-20 text-center">Olá {{ user.nome }},</h2>
+    <h2 class="block text-gray-100 text-3xl font-medium mt-10 mb-8 text-center">Escolha o seu curso</h2>
+    <div class="cards-container h-auto gap-6 justify-self-center self-center flex lg:flex-row flex-col">
         <!-- primeiro cartao de faculdade -->
-        <div class="max-w-md p-6 border rounded-lg shadow-sm bg-gray-800 border-gray-700">
+        <div class="max-w-sm lg:max-w-md p-6 border rounded-lg shadow-sm bg-gray-800 border-gray-700">
             <a href="#">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{ curso1.faculdade }}</h5>
             </a>
@@ -22,7 +23,7 @@
             </form>
         </div>
         <!-- segundo cartao de faculdade -->
-        <div class="max-w-md p-6 border rounded-lg shadow-sm bg-gray-800 border-gray-700">
+        <div class="max-w-sm lg:max-w-md  p-6 border rounded-lg shadow-sm bg-gray-800 border-gray-700">
             <a href="#">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{ curso2.faculdade }}</h5>
             </a>

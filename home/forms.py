@@ -8,7 +8,7 @@ class ChooseCourseForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields["curso"].widget.attrs.update(
             {
-                "class": "text-wrap text-black",
+                "class": "text-wrap text-black max-w-xs lg:max-w-md",
             }
         )
         self.fields["user"].widget.attrs.update({"class": "hidden"})
