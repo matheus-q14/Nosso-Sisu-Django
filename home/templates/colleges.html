@@ -1,0 +1,14 @@
+{% extends 'base_home.html' %}
+{% block content %}
+<h2 class="block text-gray-100 text-3xl font-medium mt-10 mb-8 text-center">Faculdades</h2>
+<div class="h-auto justify-self-center self-center">
+    <ul>
+        {% for college in colleges %}
+            <li class="text-white text-lg font-bold">{{ college.0 }}
+                <p class="text-white font-normal">{{ college.1 }}</p>
+                <br>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

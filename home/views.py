@@ -2,7 +2,9 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.views.decorators.cache import cache_page
 
+from .api_requests import get_college_address
 from .forms import ChooseCourseForm, CreateCourseForm
 from .models import Cursos, CursoUsuario
 
@@ -105,3 +107,20 @@ def create_course(request):
 def logout_user(request):
     logout(request)
     return redirect("login_page")
+
+@cache_page(60 * 5, key_prefix="college_list")
+def college_page(request):
+    faculdades = set()
+    colleges = []
+    cursos = Cursos.objects.all()
+    for curso in cursos:
+        faculdades.add(curso.faculdade.split("-")[0])
+    faculdades = list(faculdades)
+    for faculdade in faculdades:
+        endereco = get_college_address(faculdade)
+        colleges.append((faculdade, endereco))
+    context = {
+        "user_id": request.user.pk,
+        "colleges": colleges
+    }
+    return render(request, "colleges.html", context)
